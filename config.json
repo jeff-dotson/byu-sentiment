@@ -1,0 +1,8 @@
+{
+   "consumerKey": "<Insert Key>",
+   "consumerSecret":"<Insert Key>",
+   "accessToken":"<Insert Key>",
+   "accessTokenSecret":"<Insert Key>",
+   "mongoAddress":"localhost",
+   "mongoPort":27017
+}

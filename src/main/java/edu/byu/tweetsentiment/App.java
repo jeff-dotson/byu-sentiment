@@ -75,7 +75,7 @@ public class App
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
         //props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
         props.put("annotators", "tokenize,ssplit,parse,pos,sentiment");
-        props.put("parse.model", "edu\\stanford\\nlp\\models\\lexparser\\englishPCFG.ser.gz");         
+        props.put("parse.model", "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz");         
         App.pipeline = new StanfordCoreNLP(props);
         
         //for(MyTweet t : tweets){

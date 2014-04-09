@@ -3,7 +3,7 @@ byu-sentiment
 
 ## Introduction 
 
-This is a utility that streams tweets from twitter, assigns each a sentimnet score, then saves the tweets to a MongoDB database. The software was designed by students at Brigham Young University for research purposes.
+This is a utility that streams tweets from twitter, assigns each a sentimnet score, then saves the tweets to a MongoDB database. The software was designed by students at Brigham Young University for research purposes. Go team!
 
 **Very important!!! To get this project to work you'll need to perform the following initial setup.**
 

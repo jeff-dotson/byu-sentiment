@@ -87,7 +87,13 @@ To run the project in a linux environment, you'll need to do the following
     sudo unzip stanford-corenlp-3.3.1-models.jar
     sudo mv edu ../
 
-**Run the following commands from the root **
+**Input your tokens in the config.json file**
+
+<!-- asdf -->
+    
+    sudo vi config.json
+
+**Run the following commands from the root**
 
 <!-- language shell -->
 

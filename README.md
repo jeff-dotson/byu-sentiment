@@ -33,4 +33,13 @@ To run the twitter stream you'll need to create keys for twitter's OAuth Authent
     }
     
 ## Configure Database
+
 1. You'll also need to configure the location of the MongoDB in which you wish to store your data. These values should be placed in the "mongoAddress" & "mongoPort" fields in the **config.json** file as well.
+
+# Run the project
+
+To run the project in a linux environment, you'll need to do the following
+1. Install Maven
+2. Check the code out from github
+3. Download the stanford sentiment data (as explained above)
+4. Run the following commands from the root (chmod -R 777 byu-sentiment), (mvn compile), (mvn exec:java  -Dexec.mainClass=edu.byu.tweetsentiment.App)

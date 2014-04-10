@@ -109,7 +109,8 @@ To run the project in a linux environment, you'll need to do the following
     mvn exec:java  -Dexec.mainClass=edu.byu.tweetsentiment.App
     
     # run the program as a background process (run this instead of the line above)
-    nohup mvn exec:java -Dexec.mainClass=edu.byu.tweetsentiment.App /dev/null 2>&1&
+    # the part " > /dev/null 2>&1&" of the command makes sure this command doesn't log and never stops
+    nohup mvn exec:java -Dexec.mainClass=edu.byu.tweetsentiment.App > /dev/null 2>&1&
 
 ### Stop the process
 

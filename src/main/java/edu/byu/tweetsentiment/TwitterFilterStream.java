@@ -13,6 +13,8 @@ package edu.byu.tweetsentiment;
 
 import com.google.common.collect.Lists;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import com.twitter.hbc.ClientBuilder;
 import com.twitter.hbc.core.Client;
@@ -21,6 +23,8 @@ import com.twitter.hbc.core.endpoint.StatusesFilterEndpoint;
 import com.twitter.hbc.core.processor.StringDelimitedProcessor;
 import com.twitter.hbc.httpclient.auth.Authentication;
 import com.twitter.hbc.httpclient.auth.OAuth1;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -39,7 +43,9 @@ public class TwitterFilterStream {
         StatusesFilterEndpoint endpoint = new StatusesFilterEndpoint();
         
         // Adding terms to be tracked
-        endpoint.trackTerms(Lists.newArrayList("@PorterAirlines","@USAirways","@HawaiianAir","@AirFranceFR","@Delta", "@united", "@jetblue", "@southwestair", "@continental", "@virginamerica", "@alaskaair", "@americanair", "@AirAsia", "@BritishAirways", "@flyPAL", "@klm", "@TAMAirlines"));
+        List<String> terms = this.getSearchTerms();
+        endpoint.trackTerms(terms);
+        //endpoint.trackTerms(Lists.newArrayList("@PorterAirlines","@USAirways","@HawaiianAir","@AirFranceFR","@Delta", "@united", "@jetblue", "@southwestair", "@continental", "@virginamerica", "@alaskaair", "@americanair", "@AirAsia", "@BritishAirways", "@flyPAL", "@klm", "@TAMAirlines"));
 
         //Authenticating
         Authentication auth = new OAuth1(consumerKey, consumerSecret, token, secret);
@@ -80,5 +86,19 @@ public class TwitterFilterStream {
         t.calculateSentiment();
         t.insertToDB();
 
+    }
+    
+    //Getting search terms from the database
+    public List<String> getSearchTerms(){
+        
+        DBCursor c = App.searchTerms.find();
+        List<String> searchTerms = new ArrayList<String>();
+        
+        for(DBObject row : c){
+            String term = (String)row.get("term");
+            searchTerms.add(term);
+        }
+            
+        return searchTerms;
     }
 }

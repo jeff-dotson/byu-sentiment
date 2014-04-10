@@ -48,7 +48,8 @@ public class App
     public static StanfordCoreNLP pipeline;
     public static MongoClient mongoClient;
     public static DB db;
-    public static DBCollection coll; 
+    public static DBCollection tweets; 
+    public static DBCollection searchTerms; 
     
     //Keys & tokens for twitter
     public static String consumerKey;
@@ -67,9 +68,6 @@ public class App
         //Initializing database connections
         App.initialize();
    
-        //App.loadTweets();
-        //List<MyTweet> tweets = App.getTweets();
-        
         //Loading the annotators and training data for the stanford NLP tools
         Properties props = new Properties();
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
@@ -78,16 +76,14 @@ public class App
         props.put("parse.model", "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz");         
         App.pipeline = new StanfordCoreNLP(props);
         
+        //Calculating sentiment for a list of tweets
+        //App.loadTweets();
+        //List<MyTweet> tweets = App.getTweets();
         //for(MyTweet t : tweets){
         //    t.calculateSentiment();
         //    t.saveToDB();
         // }
         
-        //Listening for new tweets        
-        //String consumerKey = "JfvkvwdVqdqfxG5whdJEW9Cre";
-        //String consumerSecret = "xxkOegqk7Z17Km1FvNDYNz9txS66dCtbubofbFisob8YsmPPEG";
-        //String accessToken = "21464370-I3PJpQV8mXjVSiXNZTOTAu2bqaKKRaVfjlicVENOq";
-        //String accessTokenSecret = "Kvs5NVOEzR6pIk6oJp1vcK1uwxGVw35juvzYuQKFkSlIu";
         TwitterFilterStream f = new TwitterFilterStream();
         f.oauth(App.consumerKey, App.consumerSecret, App.accessToken, App.accessTokenSecret);
         
@@ -110,17 +106,17 @@ public class App
         
         //Connecting to the database
         App.mongoClient = new MongoClient( App.mongoAddress , App.mongoPort );    //local
-        //App.mongoClient = new MongoClient( "ec2-54-186-220-153.us-west-2.compute.amazonaws.com" , 27017 ); //AWS
         App.db = mongoClient.getDB( "byu" );
-        App.coll = db.getCollection("tweetstreamdelta");          
+        App.tweets = db.getCollection("tweets");          
+        App.searchTerms = db.getCollection("searchTerms"); 
         
     }
     
-    //Getting all the tweets from the database
+    //Loading all tweets from the database into memory
     public static List<MyTweet> getTweets(){
         
         try{
-            DBCursor c = App.coll.find();
+            DBCursor c = App.tweets.find();
             List<MyTweet> tweets = new ArrayList<MyTweet>();
             
             for(DBObject row : c){
@@ -156,7 +152,7 @@ public class App
             }
         
             //Inserting data into the database             
-            App.coll.insert(toInsert);
+            App.tweets.insert(toInsert);
 
         
         } catch (FileNotFoundException ex) {

@@ -61,7 +61,7 @@ public class MyTweet {
     //Physically inserting the data into the MongoDatabase
     public void insertToDB(){
         try {
-            App.coll.insert(dbrow);
+            App.tweets.insert(dbrow);
         } catch (Exception ex) {
 
         }
@@ -70,6 +70,6 @@ public class MyTweet {
     
     //Physically saves the data to the database
     public void saveToDB() {
-        App.coll.save(dbrow);
+        App.tweets.save(dbrow);
     }
 }

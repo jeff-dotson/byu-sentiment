@@ -12,6 +12,7 @@ import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,13 +52,21 @@ public class MyTweet {
             }
             avgSentimentScore = avgSentimentScore / its;
             this.dbrow.append("sentiment", avgSentimentScore);
+            
             System.out.println(text);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
 
     }
-
+    
+    public void parseDate(){
+        
+        String created_at = this.dbrow.getString("created_at");
+        Date parse = new Date(created_at);
+        this.dbrow.append("date",parse);
+    }
+    
     //Physically inserting the data into the MongoDatabase
     public void insertToDB(){
         try {

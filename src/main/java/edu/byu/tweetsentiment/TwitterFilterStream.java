@@ -84,6 +84,7 @@ public class TwitterFilterStream {
         //Using the MyTweet object to calculate sentiment and insert into the database
         MyTweet t = new MyTweet(dbObject);
         t.calculateSentiment();
+        t.parseDate();
         t.insertToDB();
 
     }

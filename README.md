@@ -48,7 +48,7 @@ To run the project in a linux environment, you'll need to do the following
 **Install Maven**
 
 <!-- language shell -->
-    sudo wget http://apache.mesi.com.ar/maven/maven-3/3.2.1/binaries/apache-maven-3.2.1-bin.tar.gzcd
+    sudo wget http://apache.mesi.com.ar/maven/maven-3/3.2.1/binaries/apache-maven-3.2.1-bin.tar.gz
     sudo tar xvzf apache-maven-3.2.1-bin.tar.gz
     sudo mkdir /usr/local/apache-maven
     cd /usr/local/apache-maven
@@ -98,16 +98,18 @@ To run the project in a linux environment, you'll need to do the following
 <!-- language shell -->
 
     # change the permissions of the root directory
+    cd ~/
     chmod -R 777 byu-sentiment
     
     # compile the code using maven
+    cd ~/byu-sentiment
     mvn compile
     
     # run the program
     mvn exec:java  -Dexec.mainClass=edu.byu.tweetsentiment.App
     
     # run the program as a background process (run this instead of the line above)
-    nohup mvn exec:java  -Dexec.mainClass=edu.byu.tweetsentiment.App &
+    nohup mvn exec:java -Dexec.mainClass=edu.byu.tweetsentiment.App /dev/null 2>&1&
 
 ### Stop the process
 

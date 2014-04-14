@@ -21,7 +21,7 @@ To run the twitter stream you'll need to create keys for twitter's OAuth Authent
 2. Create a new app, and generate the following keys: API Key, API Secret, Access Token, Access Token Secret
 3. Insert these generated keys in the file **config.json**
  
-<!-- language lang-json -->
+<!-- code -->
 
     {
         "consumerKey": "[API Key Goes Here]",
@@ -36,9 +36,17 @@ To run the twitter stream you'll need to create keys for twitter's OAuth Authent
 
 You'll also need to configure the location of the MongoDB in which you wish to store your data. These values should be placed in the "mongoAddress" & "mongoPort" fields in the **config.json** file as well.
 
-# Run the project
+# Server Setup + Run the Project
 
-To run the project in a linux environment, you'll need to do the following
+To run the project in a new AWS linux environment, you'll need to do the following
+
+**Install Java & Other Packages**
+
+    sudo yum -y update
+    sudo yum -y install java-1.7.0-openjdk
+    sudo update-alternatives --config java
+    # select the proper one
+    sudo yum -y install java-devel
 
 **Mount an ebs volume to /data/db & install mongodb**
 
@@ -56,7 +64,8 @@ To run the project in a linux environment, you'll need to do the following
 
 **Configure maven's variables (so you can do an mvn command)**
 
-<!-- Doobie doo -->
+<!-- code -->
+
     export M2_HOME=/usr/local/apache-maven/apache-maven-3.2.1
     export M2=$M2_HOME/bin
     export MAVEN_OPTS="-Xms256m -Xmx512m"
@@ -66,19 +75,20 @@ To run the project in a linux environment, you'll need to do the following
 
 **Install git**
 
-<!-- language shell -->
+<!-- code -->
 
     sudo yum install git
 
 **Check the code out from github**
 
-<!-- language shell -->
+<!-- code -->
+
     cd ~/
     git clone https://github.com/rmoncur/byu-sentiment.git
 
 **Download the stanford sentiment data**
  
-<!-- language shell -->
+<!-- code -->
 
     cd ~/byu-sentiment
     sudo wget http://nlp.stanford.edu/software/stanford-corenlp-full-2014-01-04.zip
@@ -89,7 +99,7 @@ To run the project in a linux environment, you'll need to do the following
 
 **Input your tokens in the config.json file**
 
-<!-- asdf -->
+<!-- code -->
     
     sudo vi config.json
 

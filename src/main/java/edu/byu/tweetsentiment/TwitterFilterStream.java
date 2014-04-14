@@ -65,9 +65,10 @@ public class TwitterFilterStream {
         // Establish a connection
         client.connect();
 
+        boolean keepgoing = true;
         // Reading a message from twitter, calculating the sentiment, then inserting it into the database
         //for (int msgRead = 0; msgRead < 100000; msgRead++) {
-        while(true){
+        while(keepgoing){
             String msg = queue.take();
             //System.out.println(msgRead + ") " + msg);
             insertTweet(msg);   //Analyzes sentiment, sends tweet to the db

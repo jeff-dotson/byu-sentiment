@@ -45,6 +45,9 @@ public class TwitterFilterStream {
         // Adding terms to be tracked
         List<String> terms = this.getSearchTerms();
         endpoint.trackTerms(terms);
+        for(String mt : terms){
+            System.out.println(mt);
+        }
         //endpoint.trackTerms(Lists.newArrayList("@PorterAirlines","@USAirways","@HawaiianAir","@AirFranceFR","@Delta", "@united", "@jetblue", "@southwestair", "@continental", "@virginamerica", "@alaskaair", "@americanair", "@AirAsia", "@BritishAirways", "@flyPAL", "@klm", "@TAMAirlines"));
 
         //Authenticating
@@ -63,7 +66,8 @@ public class TwitterFilterStream {
         client.connect();
 
         // Reading a message from twitter, calculating the sentiment, then inserting it into the database
-        for (int msgRead = 0; msgRead < 100000; msgRead++) {
+        //for (int msgRead = 0; msgRead < 100000; msgRead++) {
+        while(true){
             String msg = queue.take();
             //System.out.println(msgRead + ") " + msg);
             insertTweet(msg);   //Analyzes sentiment, sends tweet to the db

@@ -61,10 +61,13 @@ public class MyTweet {
     }
     
     public void parseDate(){
-        
-        String created_at = this.dbrow.getString("created_at");
-        Date parse = new Date(created_at);
-        this.dbrow.append("date",parse);
+        try{
+            String created_at = this.dbrow.getString("created_at");
+            Date parse = new Date(created_at);
+            this.dbrow.append("date",parse);
+        } catch(Exception ex){
+            
+        }
     }
     
     //Physically inserting the data into the MongoDatabase

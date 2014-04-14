@@ -68,6 +68,14 @@ public class App
         //Initializing database connections
         App.initialize();
    
+        //Calculating sentiment for a list of tweets
+        //App.loadTweets();
+        //List<MyTweet> mtweets = App.getTweets();
+        //for(MyTweet t : mtweets){
+        //    t.parseDate();
+        //    t.saveToDB();
+        //}
+        
         //Loading the annotators and training data for the stanford NLP tools
         Properties props = new Properties();
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
@@ -76,14 +84,7 @@ public class App
         props.put("parse.model", "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz");         
         App.pipeline = new StanfordCoreNLP(props);
         
-        //Calculating sentiment for a list of tweets
-        //App.loadTweets();
-        //List<MyTweet> tweets = App.getTweets();
-        //for(MyTweet t : tweets){
-        //    t.calculateSentiment();
-        //    t.saveToDB();
-        // }
-        
+        //Listening for tweets
         TwitterFilterStream f = new TwitterFilterStream();
         f.oauth(App.consumerKey, App.consumerSecret, App.accessToken, App.accessTokenSecret);
         
@@ -95,7 +96,7 @@ public class App
         
         //Reading config values from config file
         String content = new Scanner(new File("config.json")).useDelimiter("\\Z").next();
-        System.out.println(content);
+        //System.out.println(content);
         BasicDBObject o = (BasicDBObject) JSON.parse(content);
         App.consumerKey = o.getString("consumerKey");
         App.consumerSecret = o.getString("consumerSecret");
@@ -116,15 +117,16 @@ public class App
     public static List<MyTweet> getTweets(){
         
         try{
-            DBCursor c = App.tweets.find();
-            List<MyTweet> tweets = new ArrayList<MyTweet>();
+            BasicDBObject query = new BasicDBObject("date", new BasicDBObject("$exists", false)); 
+            DBCursor c = App.tweets.find(query).limit(12000);
+            List<MyTweet> tweetss = new ArrayList<MyTweet>();
             
             for(DBObject row : c){
                 MyTweet t = new MyTweet((BasicDBObject)row);
-                tweets.add(t);
+                tweetss.add(t);
             }
         
-            return tweets;
+            return tweetss;
         } catch(Exception ex){
             return null;
         }

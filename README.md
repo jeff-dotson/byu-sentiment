@@ -109,7 +109,7 @@ To run the project in a new AWS linux environment, you'll need to do the followi
 
     # change the permissions of the root directory
     cd ~/
-    chmod -R 777 byu-sentiment
+    sudo chmod -R 777 byu-sentiment
     
     # compile the code using maven
     cd ~/byu-sentiment
